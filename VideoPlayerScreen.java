@@ -110,7 +110,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.black38,
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: InkWell(
                                       onTap: () {
                                         setState(() {
@@ -131,7 +131,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.black38,
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: InkWell(
                                       onTap: () {
                                         setState(() {
@@ -152,7 +152,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.black38,
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: InkWell(
                                       onTap: () async {
                                         await _controller.seekTo(Duration.zero);
