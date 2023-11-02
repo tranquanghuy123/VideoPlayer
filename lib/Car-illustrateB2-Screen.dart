@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:smooth_video_progress/smooth_video_progress.dart';
+import 'package:fullscreen/fullscreen.dart';
 
-class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen({super.key});
+class CarIllustrateB2Screen extends StatefulWidget {
+  const CarIllustrateB2Screen({super.key});
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  State<CarIllustrateB2Screen> createState() => _CarIllustrateB2ScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
   late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayer;
+
+  bool isFullScreen = false;
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(
       Uri.parse('https://weather365xyz.b-cdn.net/120thmp/video/720p/1.mp4'),
-    );
-
-    _initializeVideoPlayer = _controller.initialize();
+    )..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
   }
 
   @override
@@ -58,21 +62,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             )),
                         Expanded(
                           flex: 7,
-                          child: FutureBuilder(
-                            future: _initializeVideoPlayer,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return AspectRatio(
-                                  aspectRatio: _controller.value.aspectRatio,
-                                  child: VideoPlayer(_controller),
-                                );
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
+                          child: Center(
+                            child: _controller.value.isInitialized
+                                ? AspectRatio(
+                              aspectRatio: _controller.value.aspectRatio,
+                              child: VideoPlayer(_controller),
+                            )
+                                : Container(),
                           ),
                         ),
                         Expanded(
@@ -81,6 +77,66 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               color: Colors.blueGrey[900],
                             )),
                       ],
+                    ),
+                  ),
+
+                  Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        height: 45,
+                        width: widthScreen,
+                        color: Colors.redAccent,
+                        padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                        child: Row(
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  setState(() {
+                                  });
+                                },
+                                child: const Icon(
+                                  Icons.arrow_back_outlined,
+                                  color: Colors.white,
+                                  size: 35,
+                                )),
+                          ],
+                        ),
+                      )),
+
+                  Positioned(
+                    right: 50,
+                    top: 125,
+                    child: Container(
+                      height: 25,
+                      width: 25,
+                      decoration: const BoxDecoration(
+                          color: Colors.black38,
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              if(isFullScreen)
+                              {
+                                isFullScreen = false;
+                                SystemChrome.setPreferredOrientations([
+                                  DeviceOrientation.portraitUp,
+                                  DeviceOrientation.portraitDown,
+                                ]);
+                              }
+                              else{
+                                isFullScreen = true;
+                                SystemChrome.setPreferredOrientations([
+                                  DeviceOrientation.landscapeLeft,
+                                  DeviceOrientation.landscapeRight,
+                                ]);
+                              }
+                            });
+                          },
+                          child: Icon(isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
+                            color: Colors.white,
+                            size: 18,
+                          )),
                     ),
                   ),
 
@@ -110,7 +166,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.black38,
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: InkWell(
                                       onTap: () {
                                         setState(() {
@@ -131,7 +187,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.black38,
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: InkWell(
                                       onTap: () {
                                         setState(() {
@@ -152,7 +208,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.black38,
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                                          BorderRadius.all(Radius.circular(5))),
                                   child: InkWell(
                                       onTap: () async {
                                         await _controller.seekTo(Duration.zero);
@@ -215,5 +271,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             ),
           ],
         ));
+
   }
 }
