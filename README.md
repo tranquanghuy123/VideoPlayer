@@ -1,16 +1,8 @@
-# playandpausevideo
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Full màn hình
+Design lại resume, pause ra giữa màn hình
+Hiện thời gian video
+Design cột mốc thời gian sau khi nhấn space
+Hiển thị khung thời gian điểm
+Bỏ title (chỉ để tình huoongs)
+Để menu/ chức năng góc màn hình ở trên bên phải sử dụng Model or bottomsheet (chuyển đỏi giữa các bài mô phỏng, bài mới hoặc quay lại làm câu cũ)
+tìm hiểu để ẩn hiện lá cờ

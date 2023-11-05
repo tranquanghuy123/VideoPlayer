@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:smooth_video_progress/smooth_video_progress.dart';
-import 'package:fullscreen/fullscreen.dart';
 
 class CarIllustrateB2Screen extends StatefulWidget {
   const CarIllustrateB2Screen({super.key});
@@ -15,6 +14,7 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
   late VideoPlayerController _controller;
 
   bool isFullScreen = false;
+  bool isSave = false;
 
   @override
   void initState() {
@@ -37,6 +37,9 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
+
+    final isMuted = _controller.value.volume == 0;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Mô phỏng'),
@@ -62,14 +65,7 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
                             )),
                         Expanded(
                           flex: 7,
-                          child: Center(
-                            child: _controller.value.isInitialized
-                                ? AspectRatio(
-                              aspectRatio: _controller.value.aspectRatio,
-                              child: VideoPlayer(_controller),
-                            )
-                                : Container(),
-                          ),
+                          child: VideoPlayer(_controller),
                         ),
                         Expanded(
                             flex: 1,
@@ -86,7 +82,7 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
                       child: Container(
                         height: 45,
                         width: widthScreen,
-                        color: Colors.redAccent,
+                        //color: Colors.redAccent,
                         padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
                         child: Row(
                           children: [
@@ -100,6 +96,111 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
                                   color: Colors.white,
                                   size: 35,
                                 )),
+                            const SizedBox(width: 10),
+                            const Text('Giao thông trên đường phố', style: TextStyle(
+                              fontSize: 18, color: Colors.white)),
+
+                            const SizedBox(width: 20),
+
+                            GestureDetector(
+                              onTap: (){},
+                              child: Container(
+                                width: 30,
+                                //color: Colors.green,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      child: const Icon(
+                                        Icons.keyboard_arrow_left_rounded,
+                                        color: Colors.cyan,
+                                        size: 25,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 10,
+                                      child: const Icon(
+                                        Icons.keyboard_arrow_left_rounded,
+                                        color: Colors.cyan,
+                                        size: 25,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(width: 8),
+
+                            const Text('Tình huống 21/120', style: TextStyle(
+                                fontSize: 18, color: Colors.white)),
+
+                            GestureDetector(
+                              onTap: (){},
+                              child: Container(
+                                width: 30,
+                                //color: Colors.green,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      child: const Icon(
+                                        Icons.keyboard_arrow_right_rounded,
+                                        color: Colors.cyan,
+                                        size: 25,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 10,
+                                      child: const Icon(
+                                        Icons.keyboard_arrow_right_rounded,
+                                        color: Colors.cyan,
+                                        size: 25,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(width: 8),
+
+                            InkWell(
+                                onTap: () {
+                                  setState(() {
+                                  });
+                                },
+                                child: Icon(
+                                  isSave ? Icons.turned_in : Icons.turned_in_not,
+                                  color: Colors.white,
+                                  size: 30,
+                                )
+                            ),
+
+                            const SizedBox(width: 8),
+                              
+                              InkWell(
+                                  onTap: () {
+                                    _controller.setVolume(isMuted ? 1 : 0);
+                                    setState(() {});
+                                  },
+                                  child: Icon( isMuted ? Icons.volume_off : Icons.volume_up,
+                                    color: Colors.cyan, size: 30,
+                                  )),
+
+                            SizedBox(width: 90),
+
+                            InkWell(
+                                onTap: () {
+                                  setState(() {
+                                  });
+                                },
+                                child: const Icon(
+                                  Icons.menu,
+                                  color: Colors.white,
+                                  size: 30,
+                                )),
+
                           ],
                         ),
                       )),
