@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   video_player: ^2.7.2
   smooth_video_progress: ^0.0.4
+  chewie: ^1.7.1
 
 
 dev_dependencies:
