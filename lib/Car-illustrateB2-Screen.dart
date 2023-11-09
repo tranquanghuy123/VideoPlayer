@@ -12,7 +12,7 @@ class CarIllustrateB2Screen extends StatefulWidget {
 
 class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
   late VideoPlayerController controller;
-  bool isClicked = false;
+  bool isVisible = false;
 
   @override
   void initState() {
@@ -46,38 +46,39 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
         body: Container(
           height: 250,
           width: widthScreen,
-          child: GestureDetector(
-            onTap: (){
-              setState(() {
-                isClicked = true;
-                Future.delayed(Duration(seconds: 3));
+            child: GestureDetector(
+              onTap: (){
                 setState(() {
-                  isClicked = false;
+                  isVisible = !isVisible;
                 });
-              });
-            },
-            child: Stack(
-              children: [
-                VideoPlayer(controller),
-                if(isClicked)
-                  Container(
-                    color: Colors.cyan,
-                    child: Center(
-                      child: IconButton(
-                        onPressed: (){
-                          setState(() {
-                            controller.value.isPlaying ? controller.pause() : controller.play();
-                          });
-                        },
-                        icon: Icon(controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                        color: Colors.white,size: 30),
+              },
+              child: Stack(
+                children: [
+                  VideoPlayer(controller),
+                  if(isVisible)
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        color: Colors.cyan,
+                        height: 50,
+                        width: 50,
+                        child: Center(
+                          child: IconButton(
+                            onPressed: (){
+                              setState(() {
+                                controller.value.isPlaying ? controller.pause() : controller.play();
+                              });
+                            },
+                            icon: Icon(controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                                color: Colors.white,size: 30),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
-              ],
-            ),
+                    )
+                ],
+              ),
+            )
           ),
-        )
     );
   }
 }
