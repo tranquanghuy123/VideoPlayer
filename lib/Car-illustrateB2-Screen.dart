@@ -1,7 +1,11 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:playandpausevideo/Video_Player_Widget.dart';
+import 'package:smooth_video_progress/smooth_video_progress.dart';
 import 'package:video_player/video_player.dart';
+
+import 'Basic_Overlay_Widget.dart';
 
 class CarIllustrateB2Screen extends StatefulWidget {
   const CarIllustrateB2Screen({super.key});
@@ -12,7 +16,6 @@ class CarIllustrateB2Screen extends StatefulWidget {
 
 class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
   late VideoPlayerController controller;
-  bool isVisible = false;
 
   @override
   void initState() {
@@ -43,42 +46,7 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
         appBar: AppBar(
           title: const Text('Mô phỏng'),
         ),
-        body: Container(
-          height: 250,
-          width: widthScreen,
-            child: GestureDetector(
-              onTap: (){
-                setState(() {
-                  isVisible = !isVisible;
-                });
-              },
-              child: Stack(
-                children: [
-                  VideoPlayer(controller),
-                  if(isVisible)
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        color: Colors.cyan,
-                        height: 50,
-                        width: 50,
-                        child: Center(
-                          child: IconButton(
-                            onPressed: (){
-                              setState(() {
-                                controller.value.isPlaying ? controller.pause() : controller.play();
-                              });
-                            },
-                            icon: Icon(controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                                color: Colors.white,size: 30),
-                          ),
-                        ),
-                      ),
-                    )
-                ],
-              ),
-            )
-          ),
+        body: VideoPlayerWidget(controller: controller)
     );
   }
 }
