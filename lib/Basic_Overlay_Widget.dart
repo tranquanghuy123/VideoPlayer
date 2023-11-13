@@ -127,7 +127,7 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
       );
 
   Widget buildPlay() =>
-      isVisible ? (widget.controller.value.isPlaying ? Container() : ElevatedButton(
+      isVisible ? ( ElevatedButton(
         onPressed: () {
           setState(() {
             widget.controller.value.isPlaying
