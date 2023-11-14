@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:playandpausevideo/orientation/Video_Player_FullScreenWidget.dart';
+import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
+
+class FullScreenPage extends StatefulWidget {
+  @override
+  _FullScreenPageState createState() => _FullScreenPageState();
+}
+
+class _FullScreenPageState extends State<FullScreenPage> {
+  late VideoPlayerController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = VideoPlayerController.networkUrl(
+      Uri.parse('https://weather365xyz.b-cdn.net/120thmp/video/720p/1.mp4'),
+    )
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(toolbarHeight: 0),
+        body: VideoPlayerFullScreenWidget(controller: controller),
+      );
+}

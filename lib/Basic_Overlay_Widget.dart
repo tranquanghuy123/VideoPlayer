@@ -4,12 +4,12 @@ import 'package:video_player/video_player.dart';
 
 class BasicOverlayWidget extends StatefulWidget {
   final VideoPlayerController controller;
-  //final VoidCallback onClickedFullScreen;
+  final VoidCallback onClickedFullScreen;
 
   const BasicOverlayWidget({
     Key? key,
     required this.controller,
-    //required this.onClickedFullScreen,
+    required this.onClickedFullScreen,
   }) : super(key: key);
 
   @override
@@ -18,6 +18,7 @@ class BasicOverlayWidget extends StatefulWidget {
 
 class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
   bool isVisible = false;
+  
 
 
   @override
@@ -68,7 +69,7 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
             child: Container(
               width: widthScreen,
               height: 40,
-              //color: Colors.redAccent,
+              color: Colors.redAccent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -84,10 +85,7 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
                         size: 25,
                       )),
                   InkWell(
-                      onTap: () {
-                        setState(() {
-                        });
-                      },
+                      onTap: widget.onClickedFullScreen,
                       child: const Icon(
                         Icons.sync,
                         color: Colors.white,
@@ -111,7 +109,7 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
   Widget buildIndicator() => // /// Thanh thoi gian
       Container(
         margin: const EdgeInsets.all(8).copyWith(right: 0),
-        height: 16,
+        height: 13,
         child: SmoothVideoProgress(
           controller: widget.controller,
           builder: (context, position, duration, child) => Slider(

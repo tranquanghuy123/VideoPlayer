@@ -13,7 +13,7 @@ class VideoPlayerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       controller != null && controller.value.isInitialized
-          ? Container(alignment: Alignment.topCenter, child: buildVideo())
+          ? Container(child: buildVideo())
           : Container(
         height: 200,
         child: Center(child: CircularProgressIndicator()),
@@ -22,7 +22,7 @@ class VideoPlayerWidget extends StatelessWidget {
   Widget buildVideo() => Stack(
     children: <Widget>[
       buildVideoPlayer(),
-      Positioned.fill(child: BasicOverlayWidget(controller: controller)),
+      Positioned.fill(child: BasicOverlayWidget(controller: controller, onClickedFullScreen: () {  },)),
     ],
   );
 

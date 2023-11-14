@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:playandpausevideo/Video_Player_Widget.dart';
+import 'package:playandpausevideo/orientation/FullScreen_Page.dart';
+import 'package:playandpausevideo/orientation/Video_Player_FullScreenWidget.dart';
 import 'package:smooth_video_progress/smooth_video_progress.dart';
 import 'package:video_player/video_player.dart';
 
@@ -45,8 +47,9 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Mô phỏng'),
+          toolbarHeight: 0,
         ),
-        body: VideoPlayerWidget(controller: controller)
+        body: VideoPlayerFullScreenWidget(controller: controller)
     );
   }
 }
