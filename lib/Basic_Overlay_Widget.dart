@@ -63,44 +63,83 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
             alignment: Alignment.center,
             child: buildPlay(),
           ),
+
           Positioned(
-            right: 0,
-            top: 200,
-            child: Container(
-              width: widthScreen,
-              height: 40,
-              color: Colors.redAccent,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(getPosition(), style: TextStyle(color: Colors.white),),
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                        });
-                      },
-                      child: const Icon(
-                        Icons.room,
-                        color: Colors.white,
-                        size: 25,
-                      )),
-                  InkWell(
-                      onTap: widget.onClickedFullScreen,
-                      child: const Icon(
-                        Icons.sync,
-                        color: Colors.white,
-                        size: 25,
-                      )),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: buildIndicator()
-          ),
+                bottom: 0,
+                left: 0,
+                right: 0,
+            child: Column(
+              children: [
+              Container(
+                  width: widthScreen,
+                  height: 20,
+                  //color: Colors.redAccent,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(getPosition(), style: TextStyle(color: Colors.white),),
+                      InkWell(
+                          onTap: () {
+                            setState(() {
+                            });
+                          },
+                          child: const Icon(
+                            Icons.room,
+                            color: Colors.white,
+                            size: 25,
+                          )),
+                      InkWell(
+                          onTap: widget.onClickedFullScreen,
+                          child: const Icon(
+                            Icons.sync,
+                            color: Colors.white,
+                            size: 25,
+                          )),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                buildIndicator()
+
+              ],
+            )
+          )
+          // Positioned.fill(
+          //   child: Container(
+          //     width: widthScreen,
+          //     height: 20,
+          //     //color: Colors.redAccent,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Text(getPosition(), style: TextStyle(color: Colors.white),),
+          //         InkWell(
+          //             onTap: () {
+          //               setState(() {
+          //               });
+          //             },
+          //             child: const Icon(
+          //               Icons.room,
+          //               color: Colors.white,
+          //               size: 25,
+          //             )),
+          //         InkWell(
+          //             onTap: widget.onClickedFullScreen,
+          //             child: const Icon(
+          //               Icons.sync,
+          //               color: Colors.white,
+          //               size: 25,
+          //             )),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //     bottom: 0,
+          //     left: 0,
+          //     right: 0,
+          //     child: buildIndicator()
+          // ),
         ],
       ),
     );

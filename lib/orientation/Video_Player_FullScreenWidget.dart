@@ -55,7 +55,7 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
   @override
   Widget build(BuildContext context) =>
       widget.controller != null && widget.controller.value.isInitialized
-          ? Container(alignment: Alignment.topCenter, child: buildVideo())
+          ? Container(child: buildVideo())
           : Center(child: CircularProgressIndicator());
 
   Widget buildVideo() => OrientationBuilder(
