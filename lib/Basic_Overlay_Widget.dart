@@ -5,11 +5,13 @@ import 'package:video_player/video_player.dart';
 class BasicOverlayWidget extends StatefulWidget {
   final VideoPlayerController controller;
   final VoidCallback onClickedFullScreen;
+  final VoidCallback markTime;
 
   const BasicOverlayWidget({
     Key? key,
     required this.controller,
     required this.onClickedFullScreen,
+    required this.markTime,
   }) : super(key: key);
 
   @override
@@ -18,7 +20,6 @@ class BasicOverlayWidget extends StatefulWidget {
 
 class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
   bool isVisible = false;
-  
 
 
   @override
@@ -38,6 +39,13 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
     return [duration.inMinutes, duration.inSeconds]
         .map((seg) => seg.remainder(60).toString().padLeft(2, '0'))
         .join(':');
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return '$twoDigitMinutes:$twoDigitSeconds';
   }
 
   @override
@@ -79,10 +87,7 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
                     children: [
                       Text(getPosition(), style: TextStyle(color: Colors.white),),
                       InkWell(
-                          onTap: () {
-                            setState(() {
-                            });
-                          },
+                          onTap: widget.markTime,
                           child: const Icon(
                             Icons.room,
                             color: Colors.white,

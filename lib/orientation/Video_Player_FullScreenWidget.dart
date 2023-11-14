@@ -21,6 +21,7 @@ class VideoPlayerFullScreenWidget extends StatefulWidget {
 
 class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidget> {
   Orientation? target;
+  String markedTime = '';
 
   @override
   void initState() {
@@ -52,6 +53,13 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
     }
   }
 
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return '$twoDigitMinutes:$twoDigitSeconds';
+  }
+
   @override
   Widget build(BuildContext context) =>
       widget.controller != null && widget.controller.value.isInitialized
@@ -81,6 +89,12 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
                 } else {
                   AutoOrientation.portraitUpMode();
                 }
+              },
+              markTime: (){
+                setState(() {
+                  markedTime = formatDuration(widget.controller.value.position);
+                });
+                print('Marked time: ${widget.controller.value.position}');
               },
             ),
           ),
