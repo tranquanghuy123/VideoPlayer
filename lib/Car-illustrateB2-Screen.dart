@@ -47,7 +47,7 @@ class _CarIllustrateB2ScreenState extends State<CarIllustrateB2Screen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Mô phỏng'),
-          //toolbarHeight: 0,
+          toolbarHeight: 0,
         ),
         body: VideoPlayerFullScreenWidget(controller: controller)
     );

@@ -41,12 +41,6 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
         .join(':');
   }
 
-  String formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$twoDigitMinutes:$twoDigitSeconds';
-  }
 
   @override
   Widget build(BuildContext context){
@@ -71,6 +65,12 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
             alignment: Alignment.center,
             child: buildPlay(),
           ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: buildMenu()),
+          ),
 
           Positioned(
                 bottom: 0,
@@ -80,19 +80,27 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
               children: [
               Container(
                   width: widthScreen,
-                  height: 20,
+                  height: 40,
                   //color: Colors.redAccent,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(getPosition(), style: TextStyle(color: Colors.white),),
-                      InkWell(
-                          onTap: widget.markTime,
-                          child: const Icon(
-                            Icons.room,
-                            color: Colors.white,
-                            size: 25,
-                          )),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.deepPurple.shade200,
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(30))),
+                        child: InkWell(
+                            onTap: widget.markTime,
+                            child: const Icon(
+                              Icons.flag,
+                              color: Colors.black,
+                              size: 35,
+                            )),
+                      ),
                       InkWell(
                           onTap: widget.onClickedFullScreen,
                           child: const Icon(
@@ -105,50 +113,78 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
                 ),
                 SizedBox(height: 10),
                 buildIndicator()
-
               ],
             )
           )
-          // Positioned.fill(
-          //   child: Container(
-          //     width: widthScreen,
-          //     height: 20,
-          //     //color: Colors.redAccent,
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Text(getPosition(), style: TextStyle(color: Colors.white),),
-          //         InkWell(
-          //             onTap: () {
-          //               setState(() {
-          //               });
-          //             },
-          //             child: const Icon(
-          //               Icons.room,
-          //               color: Colors.white,
-          //               size: 25,
-          //             )),
-          //         InkWell(
-          //             onTap: widget.onClickedFullScreen,
-          //             child: const Icon(
-          //               Icons.sync,
-          //               color: Colors.white,
-          //               size: 25,
-          //             )),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //     bottom: 0,
-          //     left: 0,
-          //     right: 0,
-          //     child: buildIndicator()
-          // ),
         ],
       ),
     );
   }
+
+  Widget buildMenu(){
+    return InkWell(
+        child: const Icon(Icons.list, color: Colors.white, size: 25,
+        ),
+        onTap: (){
+          showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            constraints: const BoxConstraints(
+              maxWidth: double.infinity,
+              maxHeight: double.infinity
+            ),
+            builder: (BuildContext context) {
+              return Container(
+                height: 350,
+                color: Colors.grey.shade900,
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  //mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      height: 50,
+                      width: double.maxFinite,
+                      color: Colors.black54,
+                      child: Row(
+                        children: [
+                          SizedBox(width: 8),
+                          InkWell(
+                              onTap: () {},
+                              child: Icon(
+                                Icons.skip_previous,
+                                color: Colors.white,
+                                size: 25,
+                              )),
+                          SizedBox(width: 8),
+                          Text('1/120', style: TextStyle(
+                            fontSize: 18, color: Colors.white
+                          )),
+                          SizedBox(width: 8),
+                          InkWell(
+                              onTap: () {},
+                              child: Icon(
+                                Icons.skip_next,
+                                color: Colors.white,
+                                size: 25,
+                              )),
+                        ],
+                      ),
+                    ),
+                    ListTile(
+                      leading: Text('TH1.', style: TextStyle(color: Colors.white,
+                          fontSize: 17, fontWeight: FontWeight.w700)),
+                      title: Text('Người đi bộ băng qua đường',style: TextStyle(color: Colors.white,
+                          fontSize: 17)),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        },
+    );
+  }
+
 
   Widget buildIndicator() => // /// Thanh thoi gian
       Container(

@@ -22,6 +22,7 @@ class VideoPlayerFullScreenWidget extends StatefulWidget {
 class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidget> {
   Orientation? target;
   String markedTime = '';
+  bool isShowMarkIcon = false;
 
   @override
   void initState() {
@@ -60,6 +61,15 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
     return '$twoDigitMinutes:$twoDigitSeconds';
   }
 
+  String getCurrentTime(Duration duration) {
+    final duration = Duration(
+        milliseconds: widget.controller.value.position.inMilliseconds.round());
+
+    return [duration.inMinutes, duration.inSeconds]
+        .map((seg) => seg.remainder(60).toString().padLeft(2, '0'))
+        .join(':');
+  }
+
   @override
   Widget build(BuildContext context) =>
       widget.controller != null && widget.controller.value.isInitialized
@@ -69,7 +79,6 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
   Widget buildVideo() => OrientationBuilder(
     builder: (context, orientation) {
       final isPortrait = orientation == Orientation.portrait;
-
       setOrientation(isPortrait);
 
       return Stack(
@@ -92,9 +101,10 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
               },
               markTime: (){
                 setState(() {
-                  markedTime = formatDuration(widget.controller.value.position);
+                  markedTime = getCurrentTime(widget.controller.value.position);
                 });
                 print('Marked time: ${widget.controller.value.position}');
+                Text('Marked Time: $markedTime');
               },
             ),
           ),
@@ -102,6 +112,8 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
       );
     },
   );
+
+
 
   Widget buildVideoPlayer() {
     final video = AspectRatio(
