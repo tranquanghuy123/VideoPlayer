@@ -99,13 +99,7 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
                   AutoOrientation.portraitUpMode();
                 }
               },
-              markTime: (){
-                setState(() {
-                  markedTime = getCurrentTime(widget.controller.value.position);
-                });
-                print('Marked time: ${widget.controller.value.position}');
-                Text('Marked Time: $markedTime');
-              },
+              buttonClick: () {  },
             ),
           ),
         ],
