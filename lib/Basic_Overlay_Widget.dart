@@ -22,11 +22,28 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
   bool isVisible = false;
   bool isTimeStampClick = true;
   double? position;
+  bool finishedPlaying = false;
+  bool isPlay = false;
 
 
   @override
   void initState() {
     super.initState();
+    widget.controller.addListener(() {
+      setState(() {
+      });
+      if (widget.controller.value.duration == widget.controller.value.position) {
+        setState(() {
+          isPlay = false;
+          finishedPlaying = true;
+          isVisible = false;
+        });
+      }
+      else
+        {
+          finishedPlaying = false;
+        }
+    });
   }
 
   @override
@@ -51,15 +68,22 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        setState(() {
-          isVisible = true;
-          Future.delayed(const Duration(seconds: 3), () {
-            setState(() {
-              isVisible = false;
-            });
+          setState(() {
+              isVisible = true;
+              Future.delayed(const Duration(seconds: 3), () {
+                setState(() {
+                  isVisible = false;
+                });
+              });
+              if(finishedPlaying)
+                {
+                  isVisible = true;
+                  Future.delayed(const Duration(minutes: 15), () {
+                  });
+                }
           });
-        });
-      },
+        },
+
       child: Stack(
         children: [
           Align(
@@ -89,21 +113,7 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
                           style: const TextStyle(color: Colors.white),
                         ),
                         buildTimeStampMark(),
-                        // Container(
-                        //   height: 40,
-                        //   width: 40,
-                        //   decoration: BoxDecoration(
-                        //       color: Colors.deepPurple.shade200,
-                        //       borderRadius:
-                        //       BorderRadius.all(Radius.circular(30))),
-                        //   child: InkWell(
-                        //       onTap: widget.markTime,
-                        //       child: const Icon(
-                        //         Icons.flag,
-                        //         color: Colors.black,
-                        //         size: 35,
-                        //       )),
-                        // ),
+
                         InkWell(
                             onTap: widget.onClickedFullScreen,
                             child: const Icon(
@@ -226,10 +236,18 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
   Widget buildPlay() => isVisible
       ? (ElevatedButton(
           onPressed: () {
+            if (finishedPlaying)
+            {
+              widget.controller.seekTo(Duration.zero);
+              widget.controller.play(); /// replay the video
+            }
+            if (isPlay) {
+              widget.controller.pause();
+            } else {
+              widget.controller.play();
+            }
             setState(() {
-              widget.controller.value.isPlaying
-                  ? widget.controller.pause()
-                  : widget.controller.play();
+              isPlay = !isPlay;
             });
           },
           style: TextButton.styleFrom(
@@ -237,12 +255,12 @@ class _BasicOverlayWidgetState extends State<BasicOverlayWidget> {
             shape: const CircleBorder(),
             padding: const EdgeInsets.all(15),
           ),
-          child: Icon(
-              widget.controller.value.isPlaying
-                  ? Icons.pause
-                  : Icons.play_arrow,
-              color: Colors.white,
-              size: 40),
+          child: Icon(finishedPlaying
+              ? Icons.replay
+              : isPlay
+              ? Icons.pause
+              : Icons.play_arrow,
+            size: 40, color: Colors.white,),
         ))
       : Container();
 
