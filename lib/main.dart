@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:playandpausevideo/Car-illustrateB2-Screen.dart';
+import 'package:playandpausevideo/List-Video-Chapter-Screen.dart';
+import 'package:playandpausevideo/Video-Chapter-Model.dart';
 
 
 void main() {
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CarIllustrateB2Screen(),
+      home: ListVideoChapterScreen(),
     );
   }
 }

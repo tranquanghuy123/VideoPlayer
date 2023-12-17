@@ -4,15 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:playandpausevideo/Basic_Overlay_Widget.dart';
+import 'package:playandpausevideo/Video-Chapter-Model.dart';
+import 'package:playandpausevideo/Video-Model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
+
+import '../Basic_Overlay_Widget2.dart';
 
 class VideoPlayerFullScreenWidget extends StatefulWidget {
   final VideoPlayerController controller;
 
+  final VideoChapterModel chapter;
+
+  final VideoModel video;
+
+
   const VideoPlayerFullScreenWidget({
     Key? key,
-    required this.controller,
+    required this.controller, required this.chapter, required this.video,
   }) : super(key: key);
 
   @override
@@ -86,7 +95,9 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
         children: <Widget>[
           buildVideoPlayer(),
           Positioned.fill(
-            child: BasicOverlayWidget(
+            child: BasicOverlayWidget2(
+              chapter: widget.chapter,
+              video: widget.video,
               controller: widget.controller,
               onClickedFullScreen: () {
                 target = isPortrait
@@ -99,7 +110,6 @@ class _VideoPlayerFullScreenWidgetState extends State<VideoPlayerFullScreenWidge
                   AutoOrientation.portraitUpMode();
                 }
               },
-              buttonClick: () {  },
             ),
           ),
         ],
